@@ -73,7 +73,7 @@ class JoyQuery
 			(	UNESCAPER,
 				function($m)
 				{	if (empty($m[1]))
-					{	return $m[0]{1};
+					{	return $m[0][1];
 					}
 					else
 					{	return mb_convert_encoding('&#x'.$m[1].';', 'UTF-8', 'HTML-ENTITIES');
@@ -130,11 +130,13 @@ class JoyQuery
 		}
 		$func_arg = $func_args ? $func_args[0] : null;
 		if ($oper == ':from')
-		{	$simple_selector['from'] = $func_arg>1 ? (integer)$func_arg : 1;
+		{	$func_arg = substr($func_arg, 1, -1); // cut quotes
+			$simple_selector['from'] = $func_arg>1 ? (integer)$func_arg : 1;
 			return;
 		}
 		if ($oper == ':limit')
-		{	$simple_selector['limit'] = $func_arg>0 ? (integer)$func_arg : 0x7FFFFFFF;
+		{	$func_arg = substr($func_arg, 1, -1); // cut quotes
+			$simple_selector['limit'] = $func_arg>0 ? (integer)$func_arg : 0x7FFFFFFF;
 			return;
 		}
 		if (substr($oper, 0, 1) != ':')
@@ -426,15 +428,15 @@ class JoyQuery
 		if ($simple_selector['from']>1 or $simple_selector['limit']!=0x7FFFFFFF)
 		{	if (!($simple_selector['from'] > 1))
 			{	// only limit
-				$xpath_str = "($xpath_str)[position() <= {$simple_selector['limit']}]";
+				$xpath_str = "{$xpath_str}[position() <= {$simple_selector['limit']}]";
 			}
 			else if ($simple_selector['limit'] == 0x7FFFFFFF)
 			{	// only from
-				$xpath_str = "($xpath_str)[position() >= {$simple_selector['from']}]";
+				$xpath_str = "{$xpath_str}[position() >= {$simple_selector['from']}]";
 			}
 			else
 			{	// both from and limit
-				$xpath_str = "($xpath_str)[position()>={$simple_selector['from']} and position()<".($simple_selector['from'] + $simple_selector['limit'])."]";
+				$xpath_str = "{$xpath_str}[position()>={$simple_selector['from']} and position()<".($simple_selector['from'] + $simple_selector['limit'])."]";
 			}
 		}
 		return $xpath_str;

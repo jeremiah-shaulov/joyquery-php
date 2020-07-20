@@ -27,6 +27,21 @@ foreach (JoyQuery::evaluate('.d span:last-child', $doc) as $elem)
 ```
 
 
+## Nonstandard features
+
+The following features are not found in standard, but implemented:
+
+- `E[foo!="bar"]` - an E element that either doesn't have "foo" attribute, or has it with value not equal to "bar"
+- `E:not(s)` - an E element that does not match selector s. Selector s can be any simple or complex (standard requires simple)
+- `E:has(s)` - an E element that also matches selector s
+- `E:any(s1, s2, ...)` - an E element that also matches any of given selectors s1, s2, ...
+- `E:input` - an E element which is INPUT, SELECT, TEXTAREA or BUTTON
+- `:from(n)` - When applied to a simple selector, e.g. E.cls, selects only elements starting from number n in matched set
+- `:limit(n)` - When applied to a simple selector, e.g. E.cls, limits matched set to no more than n elements
+- `axis::E` - XPath-like axis, see below
+- `:php-func-name` - PHP function to test elements, see below
+
+
 ## Axes
 
 Joyquery extends CSS selectors language with XPath-like axes. Example:
