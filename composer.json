@@ -2,6 +2,7 @@
 	"description": "CSS selectors query language for DOMDocument, with XPath axes extension",
 	"keywords": ["css","dom","xpath"],
 	"homepage": "https://github.com/jeremiah-shaulov/joyquery-php",
+	"license": "MIT",
 	"authors":
 	[	{	"name": "Jeremiah Shaulov",
 			"email": "jeremiah-shaulov@gmail.com",
